@@ -17,6 +17,8 @@ class Signup extends Controller{
 			if($user->validate($_POST)){
 
 				$_POST['date'] = date("Y-m-d H:i:s");
+				$_POST['role'] = 'user';
+
 				$user->insert($_POST);
 
 				message("Your profile was successfuly created, Please login");

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+  <title>Login - <?= APP_NAME ?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -64,23 +64,27 @@
                   </div>
 
                   <?php if(message()) :?>
-                    <div class="alert alert-danger text-center"><?= message(); ?></div>
+                    <div class="alert alert-danger text-center"><?= message('', true); ?></div>
+                  <?php endif; ?>
+                  <?php if(!empty($errors['email'])):?>
+                    <small class="text-danger"><?= $errors['email']; ?></small>
                   <?php endif; ?>
 
-                  <form class="row g-3 needs-validation" novalidate>
+                  <form method="post" class="row g-3 needs-validation" novalidate>
 
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <!-- <label for="yourUsername" class="form-label">Email</label> -->
                       <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please enter your username.</div>
+                        <span class="input-group-text" id="inputGroupPrepend">Email</span>
+                        <input type="text" name="email" value="<?= set_value('email'); ?>" class="form-control" id="yourUsername" xrequired>
+                        <div class="invalid-feedback">Please enter your Email.</div>
+                        
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <input type="password" name="password" value="<?= set_value('password'); ?>" class="form-control" id="yourPassword" xrequired>
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
 
