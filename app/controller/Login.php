@@ -22,11 +22,12 @@ class Login extends Controller{
 				'email'=> $_POST['email'],
 			]);
 
-			show($row);
+			//show($row);
 
 			if($row){
 
-				if($row->password === $_POST['password']){
+
+				if( password_verify($_POST['password'], $row->password) ){
 
 					//authenticate user
 					Auth::authenticate($row);
