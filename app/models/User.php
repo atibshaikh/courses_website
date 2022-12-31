@@ -67,7 +67,7 @@ class User extends Model{
 				if($data['password'] !== $data['retype_password']  ){
 
 					$this->errors['password'] = "Password do not matched";
-
+					
 				}
 			}
 
@@ -81,10 +81,7 @@ class User extends Model{
 			//show($this->errors);
 
 			if(empty($this->errors)){
-
-
-				return true;
-					
+				return true;					
 			}
 
 			
