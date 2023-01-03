@@ -25,6 +25,7 @@ class Signup extends Controller{
 
 				message("Your profile was successfuly created, Please login");
 				redirect('login');
+				
 			}else{
 
 				show("no validate");
@@ -41,8 +42,6 @@ class Signup extends Controller{
 		// $arr['password'] = $_POST['password'];
 		// $arr['role'] = "user";
 		// $arr['date'] = date("Y-m-d H:i:s");
-
-
 
 		// $db = new Database();
 		// $db->query($query, $arr);
