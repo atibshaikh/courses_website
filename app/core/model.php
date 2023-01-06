@@ -81,7 +81,6 @@ class Model extends Database
         }
 
 
-
         public function where($data){
 
             $keys = array_keys($data);

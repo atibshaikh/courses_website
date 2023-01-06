@@ -26,8 +26,12 @@
   <link href="<?= ROOT ?>/niceadmin/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="<?= ROOT ?>/niceadmin/assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
+
+
   <!-- Template Main CSS File -->
   <link href="<?= ROOT ?>/niceadmin/assets/css/style.css" rel="stylesheet">
+  <link href="<?= ROOT ?>/assets/css/custom.css" rel="stylesheet">
+
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.2.2
@@ -332,3 +336,7 @@
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
+
+     <?php if(message()) :?>
+        <div class="alert alert-danger text-center"><?= message('', true); ?></div>
+      <?php endif; ?>

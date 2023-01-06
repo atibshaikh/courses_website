@@ -24,10 +24,10 @@
           <h2><?= esc($row->firstname); ?> <?= esc($row->lastname); ?></h2>
           <h3><?= esc($row->role); ?> </h3>
           <div class="social-links mt-2">
-            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <a href="<?= esc($row->twitter_link); ?>" class="twitter" target=_blank><i class="bi bi-twitter"></i></a>
+            <a href="<?= esc($row->facebook_link); ?>" class="facebook" target=_blank><i class="bi bi-facebook"></i></a>
+            <a href="<?= esc($row->instagram_link); ?>" class="instagram" target=_blank><i class="bi bi-instagram"></i></a>
+            <a href="<?= esc($row->linkedin_link); ?>" class="linkedin" target=_blank><i class="bi bi-linkedin"></i></a>
           </div>
         </div>
       </div>
@@ -244,6 +244,9 @@
                     <?php endif; ?>
                 </div>
 
+                <div class="js-prog progress my-3 hide">
+                  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">Saving.. 50%</div>
+                </div>
                 <div class="text-center">
                   <a href="<?= ROOT ?>/admin">
                       <button type="button" class="btn btn-primary float-start">Back</button>
@@ -379,6 +382,12 @@
     show_tab(tab);
   }
 
+
+  //upload function
+
+  function save_profile(){
+    
+  }
 </script>
 
 <?php $this->view('admin/admin-footer', $data) ?>

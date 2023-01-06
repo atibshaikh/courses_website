@@ -44,7 +44,7 @@ class Admin extends Controller{
 			}
 
 			
-			if($user->edit_validate()){
+			if($user->edit_validate($_POST, $id)){
 
 				$allowed = ['image/jpeg', 'image/png'];
 
@@ -57,6 +57,8 @@ class Admin extends Controller{
 							//everything good
 							$destination = $folder.time().$_FILES['image']['name'];
 							move_uploaded_file($_FILES['image']['tmp_name'], $destination);
+
+							resize_image($destination);
 
 							$_POST['image'] = $destination;
 
@@ -77,6 +79,7 @@ class Admin extends Controller{
 				}
 
 				$user->update($id, $_POST);
+				message("Profile Update successfully");
 				redirect('admin/profile/'.$id);
 			}
 
