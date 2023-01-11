@@ -466,6 +466,7 @@
              //window.location.reload();
 
               console.log(JSON.parse( ajax.responseText));
+              console.log("WORKING ON THIS");
 
             }else{
               
