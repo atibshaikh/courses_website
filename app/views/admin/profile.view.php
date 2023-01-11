@@ -35,7 +35,7 @@
     </div>
 
     <div class="col-xl-8">
-    	<?php show($row); ?>
+    	<?php //show($row); ?>
       <div class="card">
         <div class="card-body pt-3">
           <!-- Bordered Tabs -->
@@ -121,7 +121,7 @@
                     <div class="pt-2">
                       <label class="btn btn-primary btn-sm" title="Upload new profile image">
                         <i class="text-white bi bi-upload"></i>
-                        <input onchange="load_image(this.files[0])" type="file" name="image" style="display:none">                           
+                        <input class="js-profile-image-input" onchange="load_image(this.files[0])" type="file" name="image" style="display:none">                           
                       </label>
                       <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                     </div>
@@ -196,7 +196,7 @@
                 <div class="row mb-3">
                   <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="email" type="email" class="form-control" id="Email" value="<?= set_value('email ', $row->email ); ?>">
+                    <input name="email" type="email" class="form-control" id="Email" value="<?= set_value('email ', $row->email ); ?>" required>
                   </div>
                   <?php if(!empty($errors['email'])):?>
                       <small class="text-danger"><?= $errors['email']; ?></small>
@@ -251,7 +251,7 @@
                   <a href="<?= ROOT ?>/admin">
                       <button type="button" class="btn btn-primary float-start">Back</button>
                   </a>
-                  <button type="submit" class="btn btn-danger float-end">Save Changes</button>
+                   <button type="button" onclick="save_profile(event)" type="submit" class="btn btn-danger float-end">Save Changes</button>
 
                 </div>
               </form><!-- End Profile Edit Form -->
@@ -385,9 +385,113 @@
 
   //upload function
 
-  function save_profile(){
+  function save_profile(e){
     
+    //collect the data
+
+    var form = e.currentTarget.form;
+    var inputs = form.querySelectorAll("input,textarea");
+
+    var obj = {};
+    var image_added = false;
+
+    for ( var i=0; i < inputs.length; i++){
+      var key = inputs[i].name;
+
+      if(key == "image"){
+        if(  typeof inputs[i].files[0] == 'object'){
+            obj[key] = inputs[i].files[0];  
+            images_added = true;
+        } 
+        
+      }else{
+        obj[key] = inputs[i].value;  
+      }
+      
+
+    }
+
+    // console.log(obj);
+    // return;
+
+
+    //var image = document.querySelector(".js-profile-image-input");
+
+    //validate image
+
+    if(image_added){
+
+        var allowed = ['jpg','jpeg','png'];
+        if(typeof obj.image == 'object'){
+          var ext = obj.image.name.split(".").pop();
+        }
+
+        if(!allowed.includes(ext.toLowerCase())){
+          alert("only this file types are allowed in profie image: " + allowed.toString(','));
+          return;
+        }
+    }
+
+
+    send_data(obj);
+
   }
+
+  function send_data(obj, progbar = 'js-prog'){
+
+      var prog = document.querySelector("."+ progbar);
+
+      prog.children[0].style.width = "0%";
+
+
+      prog.classList.remove("hide");
+
+      var myForm = new FormData();
+
+      for(key in obj){
+
+          myForm.append(key,obj[key]);
+
+      }
+
+      var ajax = new XMLHttpRequest();
+
+      ajax.addEventListener('readystatechange', function(){ 
+
+          if(ajax.readyState == 4){
+
+            if(ajax.status == 200 ){
+
+              //alert("upload Complete");
+             //window.location.reload();
+
+              console.log(JSON.parse( ajax.responseText));
+
+            }else{
+              
+              alert("an error occurred");
+
+            }
+
+          }
+
+      });
+
+      ajax.upload.addEventListener('progress', function(e){
+
+          var percent = Math.round( (e.loaded / e.total ) * 100 ); 
+          prog.children[0].style.width = percent + "%";
+          prog.children[0].innerHTML = "Saving.. " + percent + "%";
+
+      });
+
+      ajax.open('post','',true);
+      ajax.send(myForm)
+
+  }
+
 </script>
+
+
 
 <?php $this->view('admin/admin-footer', $data) ?>

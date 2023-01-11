@@ -35,6 +35,7 @@ class Admin extends Controller{
 
 		if( $_SERVER['REQUEST_METHOD'] == "POST" && $row){
 
+
 			$folder = 'uploads/images/';
 
 			if(!file_exists($folder)){
@@ -70,7 +71,6 @@ class Admin extends Controller{
 
 						}else{
 							$user->errors['image'] = "This file type is not allowed";
-
 						}
 
 					}else{
@@ -79,9 +79,23 @@ class Admin extends Controller{
 				}
 
 				$user->update($id, $_POST);
-				message("Profile Update successfully");
-				redirect('admin/profile/'.$id);
+
+				
+
+				// message("Profile Update successfully");
+				// redirect('admin/profile/'.$id);
 			}
+
+			if(empty($user->errors)){
+				$arr['message'] = "Profile Update successfully";	
+			}else{
+
+				$arr['message'] = "Please correct this errors";	
+				$arr['error'] = $user->errors;	
+
+			}
+			echo json_encode($arr);
+			die;
 
 		}
 
